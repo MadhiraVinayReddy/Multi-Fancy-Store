@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brands — CREX Cricket Store</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ═══ BRANDS.HTML ═══ */
+
+.brands-page { padding-top: 68px; }
+
+/* ── HERO ── */
+.brands-hero {
+  padding: 100px 80px 72px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+.brands-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201,149,42,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.brands-hero::after {
+  content: 'BRANDS';
+  position: absolute;
+  left: 50%; top: 50%; transform: translate(-50%,-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20rem; letter-spacing: 20px;
+  color: rgba(201,149,42,0.025);
+  user-select: none; white-space: nowrap;
+  pointer-events: none; z-index: 0;
+}
+
+.brands-hero > * { position: relative; z-index: 1; }
+
+.brands-hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 8vw, 9rem);
+  letter-spacing: 5px; line-height: 0.9;
+  margin-bottom: 20px;
+}
+.brands-hero h1 span { color: var(--gold); }
+
+.brands-hero p {
+  font-size: 1rem; color: var(--muted);
+  max-width: 500px; margin: 0 auto 48px;
+  line-height: 1.75;
+}
+
+/* ── TABS ── */
+.brand-tabs {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+}
+.brand-tab {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 11px 28px;
+  border-radius: 30px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.78rem; letter-spacing: 2px; font-weight: 600; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+}
+.brand-tab:hover { color: var(--white); border-color: var(--border2); }
+.brand-tab.active { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 700; }
+
+/* ── BRAND SECTION ── */
+.brand-section {
+  padding: 56px 80px;
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.3s;
+}
+.brand-section.hidden { display: none; }
+
+.bs-header {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
+}
+.bs-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.bs-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: 3px;
+}
+.bs-sub { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+/* ── BRAND CARD ── */
+.brand-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex; align-items: center; gap: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none; color: inherit;
+  position: relative; overflow: hidden;
+}
+.brand-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold); transform: scaleX(0);
+  transition: transform 0.3s; transform-origin: left;
+}
+.brand-card:hover::before { transform: scaleX(1); }
+.brand-card:hover {
+  border-color: rgba(201,149,42,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.bc-logo {
+  width: 58px; height: 58px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.bc-info { flex: 1; min-width: 0; }
+.bc-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; }
+.bc-desc { font-size: 0.75rem; color: var(--muted); margin-bottom: 8px; line-height: 1.4; }
+.bc-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold); display: flex; align-items: center; gap: 6px;
+}
+.bc-count::before { content: ''; width: 4px; height: 4px; background: var(--gold); border-radius: 50%; }
+.bc-arrow { color: var(--muted); font-size: 1.1rem; transition: all 0.2s; }
+.brand-card:hover .bc-arrow { color: var(--gold); transform: translateX(4px); }
+
+/* ── IPL TEAM CARD (enhanced) ── */
+.ipl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.ipl-card {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.ipl-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+}
+.ipl-top {
+  height: 120px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px;
+  position: relative; overflow: hidden;
+}
+.ipl-top::after {
+  content: '';
+  position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+  font-size: 7rem; opacity: 0.07;
+}
+.ipl-top .team-emoji { font-size: 3.5rem; z-index: 1; }
+.ipl-top .team-short {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 4px;
+  opacity: 0.2; z-index: 1;
+}
+.ipl-bottom {
+  background: var(--card);
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.ipl-bottom h3 { font-size: 0.92rem; font-weight: 600; }
+.ipl-bottom p { font-size: 0.73rem; color: var(--muted); margin-top: 2px; }
+.ipl-shop-btn {
+  background: rgba(201,149,42,0.1);
+  border: 1px solid rgba(201,149,42,0.2);
+  color: var(--gold);
+  padding: 7px 14px;
+  border-radius: 5px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem; letter-spacing: 1.5px; font-weight: 700;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.ipl-card:hover .ipl-shop-btn { background: var(--gold); color: var(--black); }
+
+/* ── NATIONAL TEAMS ── */
+.nat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+.nat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none; color: inherit;
+  display: block;
+}
+.nat-card:hover {
+  border-color: rgba(201,149,42,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.4);
+}
+.nat-flag { font-size: 3.5rem; margin-bottom: 14px; display: block; }
+.nat-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+.nat-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 12px; }
+.nat-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.67rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold);
+}
+
+/* ── EQUIPMENT BRANDS SPECIAL ── */
+.equip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+.equip-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  display: flex; gap: 20px;
+  cursor: pointer; transition: all 0.3s;
+  text-decoration: none; color: inherit;
+}
+.equip-card:hover {
+  border-color: rgba(201,149,42,0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px rgba(0,0,0,0.4);
+}
+.equip-logo {
+  width: 70px; height: 70px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,149,42,0.2);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.2rem; flex-shrink: 0;
+}
+.equip-info h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 2px; margin-bottom: 4px;
+}
+.equip-info p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+.equip-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.equip-tag {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  padding: 4px 10px; border-radius: 3px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted);
+}
+
+@media (max-width: 1024px) {
+  .brands-hero, .brand-section { padding-left: 32px; padding-right: 32px; }
+}
+@media (max-width: 640px) {
+  .brands-hero { padding: 64px 20px 48px; }
+  .brand-section { padding: 40px 20px; }
+  .ipl-grid { grid-template-columns: 1fr; }
+  .equip-grid { grid-template-columns: 1fr; }
+  .brands-hero h1 { font-size: clamp(3rem,12vw,6rem); }
+}
+</style>
+</head>
+<body>
+
+<nav id="crex-nav"></nav>
+
+<div class="brands-page">
+
+  <!-- HERO -->
+  <div class="brands-hero">
+    <div class="section-eyebrow" style="justify-content:center;margin-bottom:16px">Official Partners</div>
+    <h1>OUR<br><span>BRANDS</span></h1>
+    <p>From iconic equipment manufacturers to official IPL team merchandise — we carry everything, authentic and premium.</p>
+    <div class="brand-tabs">
+      <button class="brand-tab active" onclick="showTab('all',this)">All Brands</button>
+      <button class="brand-tab" onclick="showTab('ipl',this)">🏆 IPL Teams</button>
+      <button class="brand-tab" onclick="showTab('national',this)">🌏 National Teams</button>
+      <button class="brand-tab" onclick="showTab('equipment',this)">⚙️ Equipment</button>
+    </div>
+  </div>
+
+  <!-- IPL TEAMS -->
+  <section class="brand-section" id="sec-ipl">
+    <div class="bs-header">
+      <div class="bs-icon" style="background:rgba(255,140,0,0.1)">🏆</div>
+      <div>
+        <div class="bs-title">IPL Teams 2025</div>
+        <div class="bs-sub">Official merchandise for all 10 franchises</div>
+      </div>
+    </div>
+    <div class="ipl-grid" id="ipl-grid"></div>
+  </section>
+
+  <!-- NATIONAL TEAMS -->
+  <section class="brand-section" id="sec-national">
+    <div class="bs-header">
+      <div class="bs-icon" style="background:rgba(22,101,52,0.15)">🌏</div>
+      <div>
+        <div class="bs-title">National Teams</div>
+        <div class="bs-sub">Rep your country with official jerseys & gear</div>
+      </div>
+    </div>
+    <div class="nat-grid" id="nat-grid"></div>
+  </section>
+
+  <!-- EQUIPMENT BRANDS -->
+  <section class="brand-section" id="sec-equipment">
+    <div class="bs-header">
+      <div class="bs-icon" style="background:var(--gold-dim)">⚙️</div>
+      <div>
+        <div class="bs-title">Equipment Brands</div>
+        <div class="bs-sub">World-class bats, balls, and protective gear</div>
+      </div>
+    </div>
+    <div class="equip-grid" id="equip-grid"></div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="crex-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo">CREX<span>.</span></a>
+      <p>India's premier destination for premium cricket equipment.</p>
+      <div class="socials">
+        <a href="#">📘</a><a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul>
+      <li><a href="products.html?cat=Bat">Cricket Bats</a></li>
+      <li><a href="products.html?cat=Ball">Cricket Balls</a></li>
+      <li><a href="products.html?cat=Jersey">Jerseys</a></li>
+      <li><a href="products.html?cat=Gear">Gear</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Teams</h4><ul>
+      <li><a href="brands.html">IPL Teams</a></li>
+      <li><a href="brands.html">National Teams</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Help</h4><ul>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="#">Returns</a></li>
+      <li><a href="#">Track Order</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CREX Cricket Store. All rights reserved.</p>
+    <p>Made with 🏏 for cricket lovers</p>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+CREX.injectNav('brands');
+
+const iplTeams = [
+  { name:'Chennai Super Kings', short:'CSK', emoji:'🦁', bg:'linear-gradient(135deg,#1a1500,#2a2000)', products:18, badge:'Most Popular' },
+  { name:'Mumbai Indians', short:'MI', emoji:'💙', bg:'linear-gradient(135deg,#000a1a,#001530)', products:22, badge:'Top Seller' },
+  { name:'Royal Challengers Bengaluru', short:'RCB', emoji:'❤️', bg:'linear-gradient(135deg,#1a0000,#2a0505)', products:19, badge:'' },
+  { name:'Kolkata Knight Riders', short:'KKR', emoji:'💜', bg:'linear-gradient(135deg,#0f0015,#18002a)', products:16, badge:'' },
+  { name:'Sunrisers Hyderabad', short:'SRH', emoji:'🧡', bg:'linear-gradient(135deg,#1a0800,#2a1000)', products:15, badge:'Local Favourite' },
+  { name:'Delhi Capitals', short:'DC', emoji:'🔵', bg:'linear-gradient(135deg,#00081a,#001030)', products:14, badge:'' },
+  { name:'Punjab Kings', short:'PBKS', emoji:'🔴', bg:'linear-gradient(135deg,#1a0008,#2a0010)', products:13, badge:'' },
+  { name:'Rajasthan Royals', short:'RR', emoji:'🌸', bg:'linear-gradient(135deg,#1a0010,#2a0018)', products:12, badge:'' },
+  { name:'Gujarat Titans', short:'GT', emoji:'🩵', bg:'linear-gradient(135deg,#001218,#001e28)', products:11, badge:'New' },
+  { name:'Lucknow Super Giants', short:'LSG', emoji:'🔷', bg:'linear-gradient(135deg,#001a1a,#002a2a)', products:10, badge:'New' },
+];
+
+const nationalTeams = [
+  { name:'Team India', flag:'🇮🇳', sub:'BCCI Official', products:24 },
+  { name:'Australia', flag:'🇦🇺', sub:'Cricket Australia', products:16 },
+  { name:'England', flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', sub:'ECB Official', products:14 },
+  { name:'Pakistan', flag:'🇵🇰', sub:'PCB Official', products:12 },
+  { name:'South Africa', flag:'🇿🇦', sub:'CSA Official', products:10 },
+  { name:'New Zealand', flag:'🇳🇿', sub:'NZC Official', products:9 },
+  { name:'West Indies', flag:'🏝️', sub:'CWI Official', products:8 },
+  { name:'Sri Lanka', flag:'🇱🇰', sub:'SLC Official', products:8 },
+];
+
+const equipBrands = [
+  { name:'SS Sports', emoji:'⚡', desc:'India\'s leading cricket equipment brand. Known for professional bats and protective gear used by top-level players worldwide.', tags:['Bats','Pads','Gloves','Bags'], products:45 },
+  { name:'MRF', emoji:'🏆', desc:'The brand endorsed by Sachin Tendulkar & Virat Kohli. MRF makes premium English willow bats and match balls trusted globally.', tags:['Bats','Balls','Gloves'], products:38 },
+  { name:'SG Cricket', emoji:'🌟', desc:'Sanspareils Greenlands — crafting premium Indian cricket equipment since 1931. Official supplier of match balls for BCCI domestic cricket.', tags:['Bats','Balls','Helmets','Pads'], products:32 },
+  { name:'Kookaburra', emoji:'🦘', desc:'Australian brand known for the official white ball used in ODIs and the iconic Kahuna bat range. Premium quality, tournament-grade.', tags:['Bats','Balls','Gear'], products:28 },
+  { name:'Gray-Nicolls', emoji:'🎯', desc:'British cricket brand with a 150-year heritage. Known for big-edges and the iconic Powerbow technology used by Test cricketers.', tags:['Bats','Gloves','Pads'], products:22 },
+  { name:'Masuri', emoji:'⛑️', desc:'The world\'s number one helmet brand. Trusted by international players across all formats for superior head protection and comfort.', tags:['Helmets'], products:15 },
+];
+
+document.getElementById('ipl-grid').innerHTML = iplTeams.map(t => `
+  <a href="products.html?cat=Jersey&brand=${t.short}" class="ipl-card" style="text-decoration:none;color:inherit">
+    <div class="ipl-top" style="background:${t.bg}">
+      <span class="team-emoji">${t.emoji}</span>
+      <span class="team-short">${t.short}</span>
+      ${t.badge ? `<span style="position:absolute;top:12px;right:12px;background:var(--gold);color:var(--black);font-family:'Barlow Condensed',sans-serif;font-size:0.6rem;letter-spacing:1.5px;font-weight:700;padding:4px 9px;border-radius:3px;text-transform:uppercase">${t.badge}</span>` : ''}
+    </div>
+    <div class="ipl-bottom">
+      <div>
+        <h3>${t.name}</h3>
+        <p>${t.products} products available</p>
+      </div>
+      <span class="ipl-shop-btn">Shop →</span>
+    </div>
+  </a>
+`).join('');
+
+document.getElementById('nat-grid').innerHTML = nationalTeams.map(t => `
+  <a href="products.html?cat=Jersey" class="nat-card">
+    <span class="nat-flag">${t.flag}</span>
+    <div class="nat-name">${t.name}</div>
+    <div class="nat-sub">${t.sub}</div>
+    <div class="nat-count">${t.products} products</div>
+  </a>
+`).join('');
+
+document.getElementById('equip-grid').innerHTML = equipBrands.map(b => `
+  <a href="products.html?brand=${b.name}" class="equip-card" style="text-decoration:none;color:inherit">
+    <div class="equip-logo">${b.emoji}</div>
+    <div class="equip-info">
+      <h3>${b.name}</h3>
+      <p>${b.desc}</p>
+      <div class="equip-tags">
+        ${b.tags.map(t => `<span class="equip-tag">${t}</span>`).join('')}
+        <span class="equip-tag" style="color:var(--gold);border-color:rgba(201,149,42,0.3)">${b.products} items</span>
+      </div>
+    </div>
+  </a>
+`).join('');
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.brand-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const sections = { ipl: 'sec-ipl', national: 'sec-national', equipment: 'sec-equipment' };
+  Object.entries(sections).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (tab === 'all' || tab === key) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
+  });
+}
+</script>
+</body>
+</html>
