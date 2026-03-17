@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREX — Premium Cricket Store</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ═══ INDEX.HTML — HOME PAGE ═══ */
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  padding-top: 68px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 75% 50%, rgba(201,149,42,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 80% at 20% 80%, rgba(201,149,42,0.04) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* diagonal divider */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 54%;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent 0%, var(--border) 30%, var(--border) 70%, transparent 100%);
+  transform: skewX(-3deg);
+  pointer-events: none;
+}
+
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 64px 80px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* staggered entrance animations */
+.hero-left > * { opacity: 0; animation: slideUp 0.7s ease forwards; }
+.hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.22s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.34s; }
+.hero-left > *:nth-child(4) { animation-delay: 0.46s; }
+.hero-left > *:nth-child(5) { animation-delay: 0.6s; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+.hero-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,149,42,0.28);
+  color: var(--gold);
+  padding: 6px 14px 6px 8px;
+  border-radius: 30px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; letter-spacing: 2px; font-weight: 600;
+  text-transform: uppercase;
+  width: fit-content; margin-bottom: 32px;
+}
+.hero-pill .dot {
+  width: 6px; height: 6px;
+  background: var(--gold); border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.6); opacity: 0.5; } }
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4.5rem, 8vw, 9rem);
+  line-height: 0.88;
+  letter-spacing: 3px;
+  margin-bottom: 30px;
+}
+.hero-title .line-2 { color: var(--gold); }
+.hero-title .line-3 { color: var(--white2); font-size: 0.6em; letter-spacing: 6px; display: block; margin-top: 6px; }
+
+.hero-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 400px;
+  margin-bottom: 40px;
+}
+
+.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
+
+.hero-stats {
+  display: flex; gap: 36px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+}
+.stat .num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem; color: var(--gold); letter-spacing: 1px; line-height: 1;
+}
+.stat .lbl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.67rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-top: 4px;
+}
+
+/* Hero Right */
+.hero-right {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 48px 80px 32px;
+  overflow: hidden;
+}
+
+.hero-bg-text {
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18rem;
+  color: rgba(201,149,42,0.04);
+  letter-spacing: 10px;
+  user-select: none;
+  white-space: nowrap;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) rotate(-10deg);
+  pointer-events: none;
+}
+
+.hero-featured-card {
+  position: relative; z-index: 2;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 300px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
+  animation: floatCard 7s ease-in-out infinite;
+}
+@keyframes floatCard { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-14px) rotate(0.5deg); } }
+
+.hfc-top {
+  height: 220px;
+  background: linear-gradient(145deg, #0e1a0e, #1a2a0e);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 6rem;
+  position: relative;
+  overflow: hidden;
+}
+.hfc-top::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(201,149,42,0.15) 0%, transparent 60%);
+}
+.hfc-top .glow-ring {
+  position: absolute;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,149,42,0.2);
+  animation: ringPulse 3s ease-in-out infinite;
+}
+@keyframes ringPulse { 0%,100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.3); opacity: 0.1; } }
+
+.hfc-tag {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--gold); color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem; letter-spacing: 2px; font-weight: 700;
+  padding: 4px 10px; border-radius: 3px; text-transform: uppercase;
+}
+
+.hfc-body { padding: 22px 20px; }
+.hfc-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 5px;
+}
+.hfc-name { font-size: 1.05rem; font-weight: 600; margin-bottom: 16px; }
+.hfc-row { display: flex; justify-content: space-between; align-items: center; }
+.hfc-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; color: var(--gold); letter-spacing: 1px;
+}
+.hfc-add {
+  width: 40px; height: 40px;
+  background: var(--gold); color: var(--black);
+  border: none; border-radius: 8px;
+  font-size: 1.5rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.hfc-add:hover { background: var(--gold-light); transform: scale(1.1) rotate(90deg); }
+
+/* floating info badges */
+.info-badge {
+  position: absolute; z-index: 3;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.72rem; letter-spacing: 1px;
+  display: flex; align-items: center; gap: 8px;
+  white-space: nowrap;
+}
+.ib-1 { top: 110px; right: 14px; animation: floatCard 5.5s ease-in-out infinite 0.8s; }
+.ib-2 { bottom: 130px; left: 10px; animation: floatCard 6.5s ease-in-out infinite 1.4s; }
+.info-badge strong { color: var(--gold); }
+
+/* ── MARQUEE ── */
+/* (uses shared .marquee-bar styles) */
+
+/* ── CATEGORIES ── */
+.cats-section { padding: 80px; }
+
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.cat-tile {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 2/3;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.cat-tile:hover { transform: translateY(-5px); }
+.cat-tile:hover .cat-arrow { transform: translateX(6px); }
+
+.ct-bg {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5.5rem;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+}
+.ct-bat { background: linear-gradient(160deg, #0d1a0d 0%, #071207 100%); }
+.ct-ball { background: linear-gradient(160deg, #1f0505 0%, #0d0202 100%); }
+.ct-jersey { background: linear-gradient(160deg, #050d1f 0%, #020710 100%); }
+.ct-gear { background: linear-gradient(160deg, #1a1500 0%, #0d0b00 100%); }
+
+.ct-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+}
+
+.ct-info {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 22px 18px;
+  z-index: 2;
+}
+.ct-info h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 3px;
+}
+.ct-info p { font-size: 0.75rem; color: var(--muted); }
+.cat-arrow {
+  display: inline-block; color: var(--gold);
+  margin-top: 10px; font-size: 1.1rem; transition: transform 0.25s;
+}
+
+/* glowing top border on hover */
+.cat-tile::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  z-index: 3;
+}
+.cat-tile:hover::before { transform: scaleX(1); }
+
+/* ── FEATURED STRIP ── */
+.featured-section { padding: 0 80px 80px; }
+
+.section-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.see-all {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; border: none; background: none;
+  cursor: pointer; transition: color 0.2s; display: flex; align-items: center; gap: 6px;
+  padding: 0;
+}
+.see-all:hover { color: var(--gold); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
+  gap: 20px;
+}
+
+/* ── BRAND LOGOS SECTION ── */
+.brand-strip {
+  padding: 64px 80px;
+  border-top: 1px solid var(--border);
+}
+.brand-strip-grid {
+  display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: center;
+  margin-top: 40px;
+}
+.brand-chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: 3px; color: var(--muted);
+  cursor: pointer; transition: all 0.25s;
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-chip:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+/* ── PROMO BANNER ── */
+.promo-banner {
+  margin: 0 80px 80px;
+  background: linear-gradient(115deg, #0f1a08 0%, #162211 50%, #0a120a 100%);
+  border: 1px solid rgba(201,149,42,0.2);
+  border-radius: 16px;
+  padding: 56px 64px;
+  display: grid; grid-template-columns: 1fr auto;
+  align-items: center; gap: 32px;
+  position: relative; overflow: hidden;
+}
+.promo-banner::before {
+  content: 'IPL 2025';
+  position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10rem; letter-spacing: 8px; opacity: 0.04; color: var(--gold);
+  white-space: nowrap; pointer-events: none;
+}
+.promo-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem; letter-spacing: 2px; font-weight: 700;
+  padding: 5px 12px; border-radius: 3px; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.promo-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 2px; margin-bottom: 10px; color: var(--white);
+}
+.promo-sub { font-size: 0.9rem; color: var(--muted); max-width: 400px; line-height: 1.6; }
+
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .hero-left { padding: 80px 32px; }
+  .cats-section, .featured-section, .brand-strip { padding-left: 32px; padding-right: 32px; }
+  .promo-banner { margin: 0 32px 64px; padding: 40px 36px; }
+  .cats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .hero-left { padding: 60px 20px; }
+  .cats-section, .featured-section, .brand-strip { padding-left: 20px; padding-right: 20px; }
+  .promo-banner { margin: 0 20px 48px; padding: 32px 24px; grid-template-columns: 1fr; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="crex-nav"></nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-pill"><span class="dot"></span> IPL 2025 Collection Live Now</div>
+    <h1 class="hero-title">
+      PLAY<br>
+      <span class="line-2">LIKE A</span><br>
+      LEGEND
+      <span class="line-3">Premium Cricket Store</span>
+    </h1>
+    <p class="hero-desc">India's finest cricket gear — official jerseys, professional bats, match balls, and more from the world's top brands.</p>
+    <div class="hero-btns">
+      <a href="products.html" class="btn-primary">Shop All Products</a>
+      <a href="brands.html" class="btn-ghost">Explore Brands</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num">500+</div><div class="lbl">Products</div></div>
+      <div class="stat"><div class="num">10</div><div class="lbl">IPL Teams</div></div>
+      <div class="stat"><div class="num">12+</div><div class="lbl">Brands</div></div>
+      <div class="stat"><div class="num">50K+</div><div class="lbl">Happy Fans</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-bg-text">CREX</div>
+
+    <div class="hero-featured-card">
+      <div class="hfc-top">
+        <div class="glow-ring"></div>
+        <span style="position:relative;z-index:1">🦁</span>
+        <div class="hfc-tag">New Drop</div>
+      </div>
+      <div class="hfc-body">
+        <div class="hfc-brand">CSK · Official Jersey</div>
+        <div class="hfc-name">Chennai Super Kings Home 2025</div>
+        <div class="hfc-row">
+          <span class="hfc-price">₹1,499</span>
+          <button class="hfc-add" onclick="CREX.addToCart('CSK Home Jersey 2025','🦁',1499,'CSK','Jersey')">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-badge ib-1">⚡ <strong>10</strong> IPL Teams available</div>
+    <div class="info-badge ib-2">🚚 Free delivery <strong>above ₹999</strong></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="mq"></div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="cats-section">
+  <div class="section-row" style="margin-bottom:40px">
+    <div>
+      <div class="section-eyebrow">Browse</div>
+      <h2 class="section-heading" style="font-size:clamp(2.5rem,4vw,3.5rem)">Shop Categories</h2>
+    </div>
+  </div>
+  <div class="cats-grid">
+    <a href="products.html?cat=Bat" class="cat-tile" style="text-decoration:none;color:inherit">
+      <div class="ct-bg ct-bat"><span>🏏</span></div>
+      <div class="ct-overlay"></div>
+      <div class="ct-info">
+        <h3>Cricket Bats</h3>
+        <p>English & Kashmir Willow</p>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a href="products.html?cat=Ball" class="cat-tile" style="text-decoration:none;color:inherit">
+      <div class="ct-bg ct-ball"><span>🎾</span></div>
+      <div class="ct-overlay"></div>
+      <div class="ct-info">
+        <h3>Cricket Balls</h3>
+        <p>Leather · Practice · Tennis</p>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a href="products.html?cat=Jersey" class="cat-tile" style="text-decoration:none;color:inherit">
+      <div class="ct-bg ct-jersey"><span>👕</span></div>
+      <div class="ct-overlay"></div>
+      <div class="ct-info">
+        <h3>Jerseys</h3>
+        <p>National & IPL Teams</p>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+    <a href="products.html?cat=Gear" class="cat-tile" style="text-decoration:none;color:inherit">
+      <div class="ct-bg ct-gear"><span>🧤</span></div>
+      <div class="ct-overlay"></div>
+      <div class="ct-info">
+        <h3>Gear & Accessories</h3>
+        <p>Gloves · Pads · Helmets · Bags</p>
+        <span class="cat-arrow">→</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="featured-section">
+  <div class="section-row">
+    <div>
+      <div class="section-eyebrow">Handpicked</div>
+      <h2 class="section-heading" style="font-size:clamp(2.5rem,4vw,3.5rem)">Featured Products</h2>
+    </div>
+    <a href="products.html" class="see-all">View All →</a>
+  </div>
+  <div class="products-grid" id="featured-grid"></div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div>
+    <div class="promo-tag">🏆 IPL 2025 Season</div>
+    <h2 class="promo-title">OFFICIAL JERSEYS<br>FOR ALL 10 TEAMS</h2>
+    <p class="promo-sub">Rep your squad with authentic IPL 2025 jerseys. Limited stocks — grab yours before they sell out.</p>
+  </div>
+  <a href="products.html?cat=Jersey" class="btn-primary" style="white-space:nowrap">Shop Jerseys →</a>
+</div>
+
+<!-- BRAND LOGOS -->
+<section class="brand-strip">
+  <div style="text-align:center">
+    <div class="section-eyebrow" style="justify-content:center">Partners</div>
+    <h2 class="section-heading" style="font-size:clamp(2rem,3.5vw,3rem)">Official Brand Partners</h2>
+  </div>
+  <div class="brand-strip-grid">
+    <div class="brand-chip">⚡ SS Sports</div>
+    <div class="brand-chip">🏆 MRF</div>
+    <div class="brand-chip">🌟 SG Cricket</div>
+    <div class="brand-chip">🦘 Kookaburra</div>
+    <div class="brand-chip">🎯 Gray-Nicolls</div>
+    <div class="brand-chip">⛑️ Masuri</div>
+    <div class="brand-chip">🏏 GM</div>
+    <div class="brand-chip">🏅 Spartan</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="crex-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo">CREX<span>.</span></a>
+      <p>India's premier destination for premium cricket equipment. Gear up like the pros.</p>
+      <div class="socials">
+        <a href="#">📘</a><a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="products.html?cat=Bat">Cricket Bats</a></li>
+        <li><a href="products.html?cat=Ball">Cricket Balls</a></li>
+        <li><a href="products.html?cat=Jersey">Jerseys</a></li>
+        <li><a href="products.html?cat=Gear">Gear</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Teams</h4>
+      <ul>
+        <li><a href="brands.html">IPL Teams</a></li>
+        <li><a href="brands.html">National Teams</a></li>
+        <li><a href="brands.html">Equipment</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <ul>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">Track Order</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CREX Cricket Store. All rights reserved.</p>
+    <p>Made with 🏏 for cricket lovers in India</p>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+CREX.injectNav('home');
+
+// marquee
+const mqItems = ['🏏 BATS','🎾 BALLS','👕 JERSEYS','🧤 GLOVES','⛑️ HELMETS','🏆 IPL 2025','🇮🇳 TEAM INDIA','⚡ SS','🏅 MRF','🌟 SG','🦘 KOOKABURRA','🎯 GRAY-NICOLLS'];
+const mq = document.getElementById('mq');
+mq.innerHTML = [...mqItems,...mqItems].map(i => `<span class="marquee-item">${i} <span class="dot">●</span></span>`).join('');
+
+// featured products
+const featured = CREX.products.filter(p => p.badge === 'Featured' || p.badge === 'New').slice(0,8);
+document.getElementById('featured-grid').innerHTML = featured.map(p => `
+  <div class="pcard">
+    <div class="pcard-img">
+      ${p.badge ? `<span class="pcard-badge badge-${p.badge.toLowerCase()}">${p.badge}</span>` : ''}
+      <span>${p.emoji}</span>
+    </div>
+    <div class="pcard-body">
+      <div class="pcard-brand">${p.brand}</div>
+      <div class="pcard-name">${p.name}</div>
+      <div class="pcard-desc">${p.desc}</div>
+      <div class="pcard-footer">
+        <div class="pcard-price">₹${p.price.toLocaleString()} ${p.original ? `<span class="orig">₹${p.original.toLocaleString()}</span>` : ''}</div>
+        <button class="pcard-add" onclick="CREX.addToCart('${p.name}','${p.emoji}',${p.price},'${p.brand}','${p.category}')">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+// Handle URL params from category links (since we're on same domain but separate files)
+// nothing extra needed — links use query params
+</script>
+</body>
+</html>
