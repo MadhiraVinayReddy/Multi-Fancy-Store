@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — CREX Cricket Store</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ═══ CONTACT.HTML ═══ */
+
+.contact-page { padding-top: 68px; }
+
+/* ── HERO ── */
+.contact-hero {
+  padding: 80px 80px 0;
+  min-height: 260px;
+  position: relative; overflow: hidden;
+  display: flex; align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+}
+.contact-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 20% 50%, rgba(201,149,42,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.contact-hero-bg {
+  position: absolute;
+  right: -40px; top: 50%; transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16rem; letter-spacing: 12px;
+  color: rgba(201,149,42,0.03);
+  user-select: none; white-space: nowrap;
+  pointer-events: none;
+}
+.contact-hero-inner {
+  position: relative; z-index: 1;
+  padding-bottom: 48px;
+}
+.contact-hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(4rem, 7vw, 8rem);
+  letter-spacing: 4px; line-height: 0.9;
+  margin-bottom: 16px;
+}
+.contact-hero h1 .gold { color: var(--gold); }
+.contact-hero p {
+  font-size: 1rem; color: var(--muted);
+  max-width: 440px; line-height: 1.7;
+}
+
+/* ── MAIN LAYOUT ── */
+.contact-body {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 0;
+  min-height: calc(100vh - 340px);
+}
+
+/* ── LEFT — INFO ── */
+.contact-left {
+  padding: 64px 56px 64px 80px;
+  border-right: 1px solid var(--border);
+}
+
+.info-blocks { display: flex; flex-direction: column; gap: 0; }
+
+.info-block {
+  padding: 28px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 18px;
+  opacity: 0; animation: fadeIn 0.5s ease forwards;
+}
+.info-block:nth-child(1) { animation-delay: 0.1s; }
+.info-block:nth-child(2) { animation-delay: 0.2s; }
+.info-block:nth-child(3) { animation-delay: 0.3s; }
+.info-block:nth-child(4) { animation-delay: 0.4s; }
+.info-block:nth-child(5) { animation-delay: 0.5s; }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+
+.ib-icon {
+  width: 48px; height: 48px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,149,42,0.2);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+  margin-top: 2px;
+}
+.ib-content h4 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 6px;
+}
+.ib-content p { font-size: 0.9rem; color: var(--white); line-height: 1.55; }
+.ib-content .sub { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+
+/* Map placeholder */
+.map-box {
+  margin-top: 40px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  height: 220px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; color: var(--muted); font-size: 0.85rem;
+  position: relative; overflow: hidden;
+}
+.map-box::before {
+  content: '📍';
+  font-size: 2.5rem; display: block; margin-bottom: 8px;
+}
+.map-box .map-overlay {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 28px, rgba(255,255,255,0.015) 28px, rgba(255,255,255,0.015) 29px
+  ),
+  repeating-linear-gradient(
+    90deg, transparent, transparent 28px, rgba(255,255,255,0.015) 28px, rgba(255,255,255,0.015) 29px
+  );
+}
+.map-pin {
+  position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%,-60%);
+  width: 14px; height: 14px;
+  background: var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(201,149,42,0.2), 0 0 0 12px rgba(201,149,42,0.08);
+  animation: pingPin 2s ease-in-out infinite;
+}
+@keyframes pingPin { 0%,100% { box-shadow: 0 0 0 6px rgba(201,149,42,0.2), 0 0 0 12px rgba(201,149,42,0.08); } 50% { box-shadow: 0 0 0 10px rgba(201,149,42,0.1), 0 0 0 20px rgba(201,149,42,0.04); } }
+
+/* ── RIGHT — FORM ── */
+.contact-right {
+  padding: 64px 80px 64px 60px;
+  background: var(--dark);
+}
+
+.form-header { margin-bottom: 40px; }
+.form-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem; letter-spacing: 3px; margin-bottom: 6px;
+}
+.form-header p { font-size: 0.85rem; color: var(--muted); }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.67rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: var(--text);
+  padding: 12px 16px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem; outline: none;
+  transition: all 0.2s;
+  appearance: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+  background: rgba(201,149,42,0.03);
+  box-shadow: 0 0 0 3px rgba(201,149,42,0.07);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: var(--muted); }
+.form-group select option { background: var(--black); }
+.form-group textarea { min-height: 130px; resize: vertical; }
+
+/* Radio buttons */
+.radio-group {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px;
+}
+.radio-opt {
+  display: flex; align-items: center; gap: 7px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer; transition: all 0.2s;
+  font-size: 0.82rem; color: var(--muted);
+}
+.radio-opt.selected { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+.radio-opt .rcheck {
+  width: 14px; height: 14px;
+  border: 1px solid var(--border2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.radio-opt.selected .rcheck { background: var(--gold); border-color: var(--gold); }
+.radio-opt.selected .rcheck::after { content: ''; width: 5px; height: 5px; background: var(--black); border-radius: 50%; display: block; }
+
+/* File upload */
+.file-drop {
+  border: 1.5px dashed var(--border2);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--muted); font-size: 0.82rem;
+}
+.file-drop:hover { border-color: var(--gold); color: var(--gold-light); background: var(--gold-dim); }
+.file-drop .fd-icon { font-size: 1.8rem; margin-bottom: 8px; }
+
+/* Submit */
+.form-submit {
+  width: 100%;
+  background: var(--gold); color: var(--black);
+  border: none; padding: 18px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem; letter-spacing: 4px;
+  cursor: pointer; border-radius: 8px;
+  transition: all 0.3s; margin-top: 8px;
+  position: relative; overflow: hidden;
+}
+.form-submit::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  width: 0; height: 0;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+.form-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 10px 30px var(--gold-glow); }
+.form-submit:active::after { width: 300px; height: 300px; }
+
+.form-disclaimer {
+  font-size: 0.73rem; color: var(--muted);
+  text-align: center; margin-top: 14px; line-height: 1.5;
+}
+
+/* success state */
+.success-banner {
+  display: none;
+  background: rgba(22,101,52,0.15);
+  border: 1px solid rgba(22,101,52,0.35);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-top: 20px;
+  text-align: center;
+}
+.success-banner.show { display: block; }
+.success-banner .sb-icon { font-size: 2rem; margin-bottom: 8px; }
+.success-banner h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; letter-spacing: 2px; color: #4ade80; margin-bottom: 4px;
+}
+.success-banner p { font-size: 0.83rem; color: var(--muted); }
+
+/* ── FAQ SECTION ── */
+.faq-section {
+  padding: 80px;
+  border-top: 1px solid var(--border);
+  background: var(--dark);
+}
+.faq-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px; margin-top: 48px;
+}
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  transition: all 0.2s;
+}
+.faq-item:hover { border-color: rgba(201,149,42,0.25); }
+.faq-q {
+  font-size: 0.92rem; font-weight: 600; margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+  cursor: pointer;
+}
+.faq-q .fq { color: var(--gold); flex-shrink: 0; font-size: 0.75rem; }
+.faq-a { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+@media (max-width: 1100px) {
+  .contact-hero, .contact-left, .contact-right, .faq-section { padding-left: 32px; padding-right: 32px; }
+  .contact-body { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 48px; }
+}
+@media (max-width: 640px) {
+  .contact-hero { padding: 48px 20px 0; }
+  .contact-left, .contact-right, .faq-section { padding: 40px 20px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="crex-nav"></nav>
+
+<div class="contact-page">
+
+  <!-- HERO -->
+  <div class="contact-hero">
+    <div class="contact-hero-bg">CONTACT</div>
+    <div class="contact-hero-inner">
+      <div class="section-eyebrow">Get In Touch</div>
+      <h1>LET'S TALK<br><span class="gold">CRICKET</span></h1>
+      <p>Questions about gear, bulk team orders, or just want to geek out about cricket? Our experts are here for it.</p>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="contact-body">
+
+    <!-- LEFT INFO -->
+    <div class="contact-left">
+      <div class="info-blocks">
+        <div class="info-block">
+          <div class="ib-icon">📍</div>
+          <div class="ib-content">
+            <h4>Visit Our Store</h4>
+            <p>CREX Cricket Store<br>MG Road, Begumpet<br>Hyderabad, Telangana 500016</p>
+            <div class="sub">Mon–Sat: 10AM – 8PM · Sun: 11AM – 6PM</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="ib-icon">📞</div>
+          <div class="ib-content">
+            <h4>Call Us</h4>
+            <p>+91 98765 43210</p>
+            <div class="sub">Customer care available 9AM – 7PM IST</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="ib-icon">✉️</div>
+          <div class="ib-content">
+            <h4>Email</h4>
+            <p>hello@crex.in</p>
+            <div class="sub">General queries — reply within 24hrs</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="ib-icon">👕</div>
+          <div class="ib-content">
+            <h4>Bulk & Team Orders</h4>
+            <p>bulk@crex.in</p>
+            <div class="sub">Special pricing for 10+ jerseys. WhatsApp: +91 87654 32109</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="ib-icon">🔄</div>
+          <div class="ib-content">
+            <h4>Returns & Exchanges</h4>
+            <p>returns@crex.in</p>
+            <div class="sub">7-day easy return policy on all products</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-box">
+        <div class="map-overlay"></div>
+        <div class="map-pin"></div>
+        <p style="position:relative;z-index:1;font-size:0.8rem">CREX Store, MG Road, Hyderabad</p>
+        <a href="https://maps.google.com" target="_blank" style="position:relative;z-index:1;color:var(--gold);font-size:0.75rem;text-decoration:none;border:1px solid rgba(201,149,42,0.3);padding:6px 14px;border-radius:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1.5px;text-transform:uppercase;font-weight:600">Open in Maps →</a>
+      </div>
+    </div>
+
+    <!-- RIGHT FORM -->
+    <div class="contact-right">
+      <div class="form-header">
+        <h2>SEND US A MESSAGE</h2>
+        <p>Fill out the form and our team will get back to you shortly.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name *</label>
+          <input type="text" id="f-fname" placeholder="Virat">
+        </div>
+        <div class="form-group">
+          <label>Last Name *</label>
+          <input type="text" id="f-lname" placeholder="Kohli">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="f-email" placeholder="you@email.com">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" id="f-phone" placeholder="+91 98765 43210">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Enquiry Type</label>
+        <div class="radio-group" id="radio-group">
+          <div class="radio-opt selected" onclick="selectRadio(this)">
+            <div class="rcheck"></div> Product Query
+          </div>
+          <div class="radio-opt" onclick="selectRadio(this)">
+            <div class="rcheck"></div> Bulk Order
+          </div>
+          <div class="radio-opt" onclick="selectRadio(this)">
+            <div class="rcheck"></div> Return / Exchange
+          </div>
+          <div class="radio-opt" onclick="selectRadio(this)">
+            <div class="rcheck"></div> Track Order
+          </div>
+          <div class="radio-opt" onclick="selectRadio(this)">
+            <div class="rcheck"></div> Other
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Order ID (if applicable)</label>
+        <input type="text" id="f-orderid" placeholder="CRX-2025-XXXXX">
+      </div>
+
+      <div class="form-group">
+        <label>Message *</label>
+        <textarea id="f-message" placeholder="Tell us what you need — product queries, size help, custom team jerseys, bulk pricing..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Attach a File (optional)</label>
+        <div class="file-drop">
+          <div class="fd-icon">📎</div>
+          Drag & drop or click to attach a screenshot / image
+        </div>
+      </div>
+
+      <button class="form-submit" onclick="submitForm()">SEND MESSAGE 🏏</button>
+      <p class="form-disclaimer">By submitting, you agree to our <a href="#" style="color:var(--gold)">Privacy Policy</a>. We'll never share your data.</p>
+
+      <div class="success-banner" id="success-banner">
+        <div class="sb-icon">🎉</div>
+        <h3>Message Sent!</h3>
+        <p>Thanks for reaching out. Our team will reply within 24 hours. Check your email for confirmation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section">
+    <div class="section-eyebrow">FAQs</div>
+    <h2 class="section-heading" style="font-size:clamp(2.5rem,4vw,3.5rem)">Common Questions</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">Do you ship across India? <span class="fq">→</span></div>
+        <div class="faq-a">Yes! We ship to all 28 states and 8 union territories. Free delivery on orders above ₹999. Express delivery available in major cities within 24–48 hours.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Are the jerseys authentic official merchandise? <span class="fq">→</span></div>
+        <div class="faq-a">Absolutely. All IPL and national team jerseys are officially licensed products. Each jersey comes with a holographic authenticity tag and official packaging.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I get bulk pricing for team kits? <span class="fq">→</span></div>
+        <div class="faq-a">Email us at bulk@crex.in or WhatsApp +91 87654 32109. We offer special rates for orders of 10+ jerseys and can arrange custom printing with team names & numbers.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What's your return policy? <span class="fq">→</span></div>
+        <div class="faq-a">7-day hassle-free returns on all products. Items must be unused and in original packaging. Once we receive the return, refund is processed within 3–5 business days.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you provide bat knock-in service? <span class="fq">→</span></div>
+        <div class="faq-a">Yes! Visit our store for professional bat knocking services. We offer basic (₹299), standard (₹499) and premium machine knock-in services (₹799) to prepare your bat for match play.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Which payment methods do you accept? <span class="fq">→</span></div>
+        <div class="faq-a">All major payment modes: UPI (GPay, PhonePe, Paytm), Credit/Debit cards, Net Banking, EMI on orders above ₹3,000. Cash on delivery available up to ₹5,000.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="crex-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo">CREX<span>.</span></a>
+      <p>India's premier destination for premium cricket equipment.</p>
+      <div class="socials">
+        <a href="#">📘</a><a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul>
+      <li><a href="products.html?cat=Bat">Cricket Bats</a></li>
+      <li><a href="products.html?cat=Ball">Cricket Balls</a></li>
+      <li><a href="products.html?cat=Jersey">Jerseys</a></li>
+      <li><a href="products.html?cat=Gear">Gear</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Teams</h4><ul>
+      <li><a href="brands.html">IPL Teams</a></li>
+      <li><a href="brands.html">National Teams</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Help</h4><ul>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="#">Size Guide</a></li>
+      <li><a href="#">Returns</a></li>
+      <li><a href="#">Track Order</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CREX Cricket Store. All rights reserved.</p>
+    <p>Made with 🏏 for cricket lovers in India</p>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+CREX.injectNav('contact');
+
+function selectRadio(el) {
+  document.querySelectorAll('.radio-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function submitForm() {
+  const fname = document.getElementById('f-fname').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const msg = document.getElementById('f-message').value.trim();
+
+  if (!fname || !email || !msg) {
+    CREX.showToast('⚠️ Please fill in Name, Email and Message.', '⚠️');
+    return;
+  }
+  if (!email.includes('@')) {
+    CREX.showToast('⚠️ Please enter a valid email address.', '⚠️');
+    return;
+  }
+
+  // Show success
+  document.getElementById('success-banner').classList.add('show');
+  document.querySelector('.form-submit').disabled = true;
+  document.querySelector('.form-submit').textContent = '✓ SENT!';
+  document.querySelector('.form-submit').style.background = '#166534';
+
+  // Clear fields
+  ['f-fname','f-lname','f-email','f-phone','f-orderid','f-message'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+
+  CREX.showToast('✅ Message sent! We\'ll reply within 24 hours.', '✅');
+}
+</script>
+</body>
+</html>
