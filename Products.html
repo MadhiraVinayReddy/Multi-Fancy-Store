@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products — CREX Cricket Store</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ═══ PRODUCTS.HTML ═══ */
+
+.products-page { padding-top: 68px; min-height: 100vh; }
+
+/* PAGE HEADER */
+.products-hero {
+  padding: 64px 80px 48px;
+  background: linear-gradient(to bottom, rgba(201,149,42,0.04) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.products-hero::before {
+  content: 'PRODUCTS';
+  position: absolute;
+  right: -10px; top: 50%; transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12rem; letter-spacing: 10px;
+  color: rgba(201,149,42,0.04);
+  user-select: none; white-space: nowrap;
+  pointer-events: none;
+}
+.products-hero-inner {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 20px;
+}
+.ph-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem,5vw,5rem); letter-spacing: 3px; line-height: 0.9;
+}
+.ph-title span { color: var(--gold); }
+.ph-count {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-top: 10px;
+}
+
+/* SEARCH BAR */
+.search-wrap {
+  position: relative; width: 280px;
+}
+.search-wrap input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 12px 42px 12px 16px;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.88rem; outline: none;
+  transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--gold); }
+.search-wrap input::placeholder { color: var(--muted); }
+.search-icon {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); font-size: 0.9rem;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  padding: 20px 80px;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark);
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  position: sticky; top: 68px; z-index: 50;
+  backdrop-filter: blur(12px);
+}
+.fb-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); margin-right: 4px;
+}
+.fb-sep { width: 1px; height: 24px; background: var(--border); margin: 0 8px; flex-shrink: 0; }
+
+.ftag {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.73rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+  display: flex; align-items: center; gap: 5px;
+}
+.ftag:hover { border-color: var(--gold-light); color: var(--white); }
+.ftag.active {
+  background: var(--gold); color: var(--black);
+  border-color: var(--gold); font-weight: 700;
+}
+
+/* LAYOUT */
+.products-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: calc(100vh - 200px);
+}
+
+/* SIDEBAR */
+.sidebar {
+  padding: 32px 24px;
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: calc(68px + 61px);
+  height: fit-content;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+.sb-section { margin-bottom: 32px; }
+.sb-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 14px;
+}
+.sb-options { display: flex; flex-direction: column; gap: 6px; }
+.sb-opt {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 0.83rem; cursor: pointer; padding: 5px 0;
+  color: var(--muted); transition: color 0.2s;
+}
+.sb-opt:hover { color: var(--white); }
+.sb-opt.active { color: var(--white); }
+.sb-opt .check {
+  width: 16px; height: 16px;
+  border: 1px solid var(--border2);
+  border-radius: 3px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  transition: all 0.2s;
+}
+.sb-opt.active .check { background: var(--gold); border-color: var(--gold); color: var(--black); }
+
+.price-range { padding: 4px 0; }
+.price-range input[type="range"] {
+  width: 100%; accent-color: var(--gold); cursor: pointer;
+}
+.price-labels {
+  display: flex; justify-content: space-between;
+  font-size: 0.75rem; color: var(--muted); margin-top: 6px;
+}
+
+/* MAIN GRID */
+.products-main { padding: 32px 40px 60px; }
+
+.sort-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 28px; flex-wrap: wrap; gap: 12px;
+}
+.results-text { font-size: 0.83rem; color: var(--muted); }
+.results-text strong { color: var(--white); }
+
+.sort-select {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.75rem; letter-spacing: 1px;
+  outline: none; cursor: pointer;
+}
+.sort-select option { background: var(--black); }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.no-results {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--muted);
+}
+.no-results .nr-icon { font-size: 3rem; margin-bottom: 16px; }
+.no-results h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 2px; color: var(--white2); margin-bottom: 8px;
+}
+
+/* PAGINATION */
+.pagination {
+  display: flex; justify-content: center; gap: 8px; margin-top: 48px;
+}
+.pg-btn {
+  width: 40px; height: 40px;
+  background: var(--card); border: 1px solid var(--border);
+  color: var(--muted); border-radius: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.pg-btn:hover, .pg-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+
+@media (max-width: 1100px) {
+  .products-hero { padding: 48px 32px 36px; }
+  .filter-bar { padding: 16px 32px; }
+  .products-body { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .products-main { padding: 24px 32px 48px; }
+}
+@media (max-width: 640px) {
+  .products-hero { padding: 32px 20px 28px; }
+  .filter-bar { padding: 14px 20px; }
+  .products-main { padding: 20px 20px 40px; }
+  .search-wrap { width: 100%; }
+  .products-hero-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav id="crex-nav"></nav>
+
+<div class="products-page">
+
+  <!-- PAGE HEADER -->
+  <div class="products-hero">
+    <div class="products-hero-inner">
+      <div>
+        <div class="section-eyebrow">Our Collection</div>
+        <h1 class="ph-title">ALL <span>PRODUCTS</span></h1>
+        <p class="ph-count" id="ph-count">Loading...</p>
+      </div>
+      <div class="search-wrap">
+        <input type="text" id="search-input" placeholder="Search products..." oninput="applyFilters()">
+        <span class="search-icon">🔍</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP FILTER BAR -->
+  <div class="filter-bar">
+    <span class="fb-label">Category</span>
+    <button class="ftag active" onclick="setCat('All',this)">All</button>
+    <button class="ftag" onclick="setCat('Bat',this)">🏏 Bats</button>
+    <button class="ftag" onclick="setCat('Ball',this)">🎾 Balls</button>
+    <button class="ftag" onclick="setCat('Jersey',this)">👕 Jerseys</button>
+    <button class="ftag" onclick="setCat('Gear',this)">🧤 Gear</button>
+
+    <div class="fb-sep"></div>
+    <span class="fb-label">Brand</span>
+    <button class="ftag active" id="brand-all" onclick="setBrand('All',this)">All Brands</button>
+    <button class="ftag" onclick="setBrand('SS',this)">SS</button>
+    <button class="ftag" onclick="setBrand('MRF',this)">MRF</button>
+    <button class="ftag" onclick="setBrand('SG',this)">SG</button>
+    <button class="ftag" onclick="setBrand('Kookaburra',this)">Kookaburra</button>
+  </div>
+
+  <!-- BODY -->
+  <div class="products-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sb-section">
+        <div class="sb-title">Category</div>
+        <div class="sb-options" id="sb-cats"></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-title">Brand</div>
+        <div class="sb-options" id="sb-brands"></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-title">Max Price</div>
+        <div class="price-range">
+          <input type="range" min="299" max="16000" value="16000" step="100" id="price-range" oninput="updatePriceLabel(); applyFilters()">
+          <div class="price-labels"><span>₹299</span><span id="price-val">₹16,000</span></div>
+        </div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-title">Filter by Badge</div>
+        <div class="sb-options">
+          <label class="sb-opt active" onclick="toggleBadge(this,'')">
+            <span class="check">✓</span> All Items
+          </label>
+          <label class="sb-opt" onclick="toggleBadge(this,'New')">
+            <span class="check"></span> New Arrivals
+          </label>
+          <label class="sb-opt" onclick="toggleBadge(this,'Sale')">
+            <span class="check"></span> On Sale
+          </label>
+          <label class="sb-opt" onclick="toggleBadge(this,'Featured')">
+            <span class="check"></span> Featured
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="products-main">
+      <div class="sort-row">
+        <p class="results-text" id="results-text">Showing <strong>0</strong> products</p>
+        <select class="sort-select" id="sort-select" onchange="applyFilters()">
+          <option value="default">Sort: Default</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name: A–Z</option>
+        </select>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+      <div class="pagination" id="pagination"></div>
+    </main>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="crex-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="index.html" class="footer-brand-logo">CREX<span>.</span></a>
+      <p>India's premier cricket gear destination. Gear up like the pros with authentic products.</p>
+      <div class="socials">
+        <a href="#">📘</a><a href="#">📸</a><a href="#">🐦</a><a href="#">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col"><h4>Shop</h4><ul>
+      <li><a href="products.html?cat=Bat">Cricket Bats</a></li>
+      <li><a href="products.html?cat=Ball">Cricket Balls</a></li>
+      <li><a href="products.html?cat=Jersey">Jerseys</a></li>
+      <li><a href="products.html?cat=Gear">Gear</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Teams</h4><ul>
+      <li><a href="brands.html">IPL Teams</a></li>
+      <li><a href="brands.html">National Teams</a></li>
+    </ul></div>
+    <div class="footer-col"><h4>Help</h4><ul>
+      <li><a href="contact.html">Contact Us</a></li>
+      <li><a href="#">Returns</a></li>
+      <li><a href="#">Track Order</a></li>
+    </ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CREX Cricket Store. All rights reserved.</p>
+    <p>Made with 🏏 for cricket lovers</p>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script>
+CREX.injectNav('products');
+
+let activeCat = 'All';
+let activeBrand = 'All';
+let activeBadge = '';
+let maxPrice = 16000;
+
+// Read URL param
+const urlCat = new URLSearchParams(window.location.search).get('cat');
+if (urlCat) activeCat = urlCat;
+
+// Build sidebar
+const cats = ['All','Bat','Ball','Jersey','Gear'];
+const brands = ['All','SS','MRF','SG','Kookaburra','Gray-Nicolls','GM','Spartan','Masuri','BCCI','Cricket Australia','ECB','PCB','CSA','CSK','MI','RCB','KKR','SRH','DC','GT','LSG','PBKS','RR'];
+
+document.getElementById('sb-cats').innerHTML = cats.map(c => `
+  <label class="sb-opt ${c===activeCat?'active':''}" onclick="setCat('${c}',null);this.parentElement.querySelectorAll('.sb-opt').forEach(o=>o.classList.remove('active'));this.classList.add('active')">
+    <span class="check">${c===activeCat?'✓':''}</span> ${c==='All'?'All Categories':c+'s'}
+  </label>
+`).join('');
+
+document.getElementById('sb-brands').innerHTML = brands.slice(0,10).map(b => `
+  <label class="sb-opt ${b==='All'?'active':''}" onclick="setBrand('${b}',null)">
+    <span class="check">${b==='All'?'✓':''}</span> ${b==='All'?'All Brands':b}
+  </label>
+`).join('');
+
+// sync top bar filter on load
+if (activeCat !== 'All') {
+  document.querySelectorAll('.ftag').forEach(b => {
+    b.classList.remove('active');
+    if (b.textContent.includes(activeCat)) b.classList.add('active');
+  });
+}
+
+function setCat(cat, btn) {
+  activeCat = cat;
+  if (btn) {
+    document.querySelectorAll('.filter-bar .ftag').forEach((b,i) => { if(i<5) b.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+function setBrand(brand, btn) {
+  activeBrand = brand;
+  if (btn) {
+    const all = btn.parentElement.querySelectorAll('.ftag');
+    all.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  applyFilters();
+}
+
+function toggleBadge(el, badge) {
+  activeBadge = badge;
+  el.parentElement.querySelectorAll('.sb-opt').forEach(o => {
+    o.classList.remove('active');
+    o.querySelector('.check').textContent = '';
+  });
+  el.classList.add('active');
+  el.querySelector('.check').textContent = '✓';
+  applyFilters();
+}
+
+function updatePriceLabel() {
+  maxPrice = +document.getElementById('price-range').value;
+  document.getElementById('price-val').textContent = '₹' + maxPrice.toLocaleString();
+}
+
+function applyFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  const sort = document.getElementById('sort-select').value;
+
+  let list = CREX.products.filter(p => {
+    if (activeCat !== 'All' && p.category !== activeCat) return false;
+    if (activeBrand !== 'All' && p.brand !== activeBrand) return false;
+    if (activeBadge && p.badge !== activeBadge) return false;
+    if (p.price > maxPrice) return false;
+    if (search && !p.name.toLowerCase().includes(search) && !p.brand.toLowerCase().includes(search) && !p.desc.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  if (sort === 'price-asc') list.sort((a,b) => a.price-b.price);
+  if (sort === 'price-desc') list.sort((a,b) => b.price-a.price);
+  if (sort === 'name') list.sort((a,b) => a.name.localeCompare(b.name));
+
+  document.getElementById('ph-count').textContent = `${list.length} product${list.length !== 1?'s':''} found`;
+  document.getElementById('results-text').innerHTML = `Showing <strong>${list.length}</strong> product${list.length!==1?'s':''}`;
+
+  const grid = document.getElementById('products-grid');
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="no-results"><div class="nr-icon">🔍</div><h3>No Products Found</h3><p>Try adjusting your filters or search term.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => `
+    <div class="pcard">
+      <div class="pcard-img">
+        ${p.badge ? `<span class="pcard-badge badge-${p.badge.toLowerCase()}">${p.badge}</span>` : ''}
+        <span>${p.emoji}</span>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-brand">${p.brand}</div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-desc">${p.desc}</div>
+        <div class="pcard-footer">
+          <div class="pcard-price">₹${p.price.toLocaleString()} ${p.original ? `<span class="orig">₹${p.original.toLocaleString()}</span>` : ''}</div>
+          <button class="pcard-add" onclick="CREX.addToCart('${p.name.replace(/'/g,"\\'")}','${p.emoji}',${p.price},'${p.brand}','${p.category}')">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+applyFilters();
+</script>
+</body>
+</html>
